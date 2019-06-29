@@ -1,5 +1,4 @@
-{% set version = '0.2' %}
-
+{% set version = '0.3.0' %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -8,45 +7,69 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: log4r_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/log4r_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/log4r/log4r_{{ version }}.tar.gz
-
-  sha256: 321bee6babb92376b538624027a36e7d2a6c8edb360aa38ab0a6762dfea9081f
+    - {{ cran_mirror }}/src/contrib/log4r_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/log4r/log4r_{{ version }}.tar.gz
+  sha256: 8e5d0221298410e48bee9d9a983a23e1834ce88592f9d931471bfdb05f37a691
 
 build:
-  noarch: generic
-  number: 1000
-
+  merge_build_host: True  # [win]
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
+    - {{ compiler('c') }}              # [not win]
+    - {{ compiler('m2w64_c') }}        # [win]
+    - {{posix}}filesystem        # [win]
+    - {{posix}}make
+    - {{posix}}sed               # [win]
+    - {{posix}}coreutils         # [win]
+    - {{posix}}zip               # [win]
+  host:
     - r-base
-
   run:
     - r-base
+    - {{native}}gcc-libs         # [win]
 
 test:
   commands:
-    - $R -e "library('log4r')"  # [not win]
+    - $R -e "library('log4r')"           # [not win]
     - "\"%R%\" -e \"library('log4r')\""  # [win]
 
 about:
-  home: https://cran.r-project.org/web/packages/log4r/index.html
+  home: https://github.com/johnmyleswhite/log4r
   license: Artistic-2.0
-  summary: logr4 provides an object-oriented logging system that uses an API roughly equivalent
-    to log4j and its related variants.
+  summary: The log4r package is meant to provide a fast, lightweight, object-oriented approach
+    to logging in R based on the widely-emulated 'log4j' system and etymology.
   license_family: OTHER
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/Artistic-2.0'
+
 extra:
-   recipe-maintainers:
+  recipe-maintainers:
+    - conda-forge/r
     - MathiasHaudgaard
     - FrodePedersen
     - ArneKr
-    - johanneskoester
-    - bgruening
-    - daler
-    - jdblischak
+
+# Type: Package
+# Package: log4r
+# Title: A Simple Logging System for R, Based on 'log4j'
+# Version: 0.3.0
+# Authors@R: c( person("John Myles", "White", role = c("aut", "cph")), person("Kenton", "White", role = "ctb"), person("Kirill", "Muller", email = "krlmlr+r@mailbox.org", role = "ctb"), person("Aaron", "Jacobs", email = "atheriel@gmail.com", role = c("aut", "cre")) )
+# Description: The log4r package is meant to provide a fast, lightweight, object-oriented approach to logging in R based on the widely-emulated 'log4j' system and etymology.
+# License: Artistic-2.0
+# URL: https://github.com/johnmyleswhite/log4r
+# BugReports: https://github.com/johnmyleswhite/log4r/issues
+# Suggests: testthat
+# Encoding: UTF-8
+# LazyLoad: yes
+# RoxygenNote: 6.1.1
+# NeedsCompilation: yes
+# Packaged: 2019-06-20 22:46:08 UTC; aaronj
+# Author: John Myles White [aut, cph], Kenton White [ctb], Kirill Muller [ctb], Aaron Jacobs [aut, cre]
+# Maintainer: Aaron Jacobs <atheriel@gmail.com>
+# Repository: CRAN
+# Date/Publication: 2019-06-21 08:00:11 UTC
