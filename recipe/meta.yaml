@@ -1,4 +1,4 @@
-{% set version = "0.4.0" %}
+{% set version = "0.4.1" %}
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,7 +10,7 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/log4r_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/log4r/log4r_{{ version }}.tar.gz
-  sha256: c3fc201a50c6f6c0c5805c0937940214fe1226e3330e9ef67cdd29ec94e5c9d7
+  sha256: 2efa1e69b77fcd87621d4bac0dd93fde5eeba250c776fcb631476925f3aabf63
 
 build:
   merge_build_host: true  # [win]
