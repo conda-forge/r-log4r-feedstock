@@ -1,4 +1,4 @@
-{% set version = "0.4.3" %}
+{% set version = "0.4.4" %}
 {% set posix = 'm2-' if win else '' %}
 
 package:
@@ -9,10 +9,10 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/log4r_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/log4r/log4r_{{ version }}.tar.gz
-  sha256: dfe3d49d35a8d8f3ad63f156d18e860540a01bd0af0e343cbab3e31a2cf5904c
+  sha256: ff1f2d2552f492d66680e36776ecb515479483da5e09f260f1ada661776ce732
 
 build:
-  number: 2
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
