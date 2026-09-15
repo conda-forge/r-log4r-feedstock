@@ -29,8 +29,14 @@ requirements:
     - {{ posix }}coreutils         # [win]
     - {{ posix }}zip               # [win]
   host:
+    - r-cli
+    - r-lifecycle
+    - r-rlang
     - r-base
   run:
+    - r-cli
+    - r-lifecycle
+    - r-rlang
     - r-base
 
 test:
